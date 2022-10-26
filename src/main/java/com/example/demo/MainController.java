@@ -189,16 +189,21 @@ public class MainController {
 		}
 
 		List<Vdp> vdps2 = new LinkedList<Vdp>();
+		List<Vdp> vdps3 = new LinkedList<Vdp>();
 		for (VdpRelationsModel i : vdpRelationsModels2) {
+			
+			if(i.daughterList.size()>0||i.sonsList.size()>0||i.wifeList.size()>0) {
 			vdps2.add(new Vdp(i));
 			
 			addFamilyToList(i,vdps2);
 			
-			
+			}
+			else
+				vdps3.add(new Vdp(i));
 			
 
 		}
-
+		vdps2.addAll(vdps3);
 		return vdps2;
 	}
 
