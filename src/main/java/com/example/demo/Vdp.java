@@ -15,11 +15,12 @@ public class Vdp {
 	public String relation_type;
 	public int age;
 	public String relationship_name;
-	public String score;
 	public String relationlastnameen;
 	public String relationshipName;
 	public String relationshipSurname;
 	public String village_or_ward_name;
+	private String relationship_namescore;
+	private String first_namescore;
 	public long getId() {
 		return id;
 	}
@@ -92,12 +93,7 @@ public class Vdp {
 	public void setRelationship_name(String relationship_name) {
 		this.relationship_name = relationship_name;
 	}
-	public String getScore() {
-		return score;
-	}
-	public void setScore(String score) {
-		this.score = score;
-	}
+
 	public String getRelationlastnameen() {
 		return relationlastnameen;
 	}
@@ -122,10 +118,24 @@ public class Vdp {
 	public void setVillage_or_ward_name(String village_or_ward_name) {
 		this.village_or_ward_name = village_or_ward_name;
 	}
+	
+	
+	public String getRelationship_namescore() {
+		return relationship_namescore;
+	}
+	public void setRelationship_namescore(String relationship_namescore) {
+		this.relationship_namescore = relationship_namescore;
+	}
+	public String getFirst_namescore() {
+		return first_namescore;
+	}
+	public void setFirst_namescore(String first_namescore) {
+		this.first_namescore = first_namescore;
+	}
 	public Vdp(String id,  String door_no, String caste, String first_name, String last_name,
 			String first_name_te, String last_name_te, String gender, String relation_type, String age,
-			String relationship_name, String score, String relationlastnameen, String relationshipName,
-			String relationshipSurname, String village_or_ward_name) {
+			String relationship_name,  String relationlastnameen, String relationshipName,
+			String relationshipSurname, String village_or_ward_name,String relationship_namescore,String first_namescore) {
 		super();
 		this.id = Integer.parseInt(id) ;
 		this.vpd_id = Integer.parseInt(id);
@@ -139,12 +149,40 @@ public class Vdp {
 		this.relation_type = relation_type;
 		this.age = Integer.parseInt(age);
 		this.relationship_name = relationship_name;
-		this.score = score;
+		this.relationship_namescore = relationship_namescore;
+		this.first_namescore = first_namescore;
 		this.relationlastnameen = relationlastnameen;
 		this.relationshipName = relationshipName;
 		this.relationshipSurname = relationshipSurname;
 		this.village_or_ward_name = village_or_ward_name;
 	}
+	public Vdp() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
-	
+
+	public Vdp(VdpRelationsModel i) {
+		// TODO Auto-generated constructor stub
+		super();
+		this.id = i.getId() ;
+		this.vpd_id = i.id;
+		this.door_no = i.door_no;
+		this.caste = i.caste;
+		this.first_name = i.first_name;
+		this.last_name = i.last_name;
+		this.first_name_te = i.first_name_te;
+		this.last_name_te = i.last_name_te;
+		this.gender = i.gender;
+		this.relation_type = i.relation_type;
+		this.age = i.age;
+		this.relationship_name = i.relationship_name;
+		this.relationship_namescore = i.relationship_namescore;
+		this.first_namescore = i.first_namescore;
+		this.relationlastnameen = i.relationlastnameen;
+		this.relationshipName = i.relationshipName;
+		this.relationshipSurname = i.relationshipSurname;
+		this.village_or_ward_name = i.village_or_ward_name;
+		
+	}
 }

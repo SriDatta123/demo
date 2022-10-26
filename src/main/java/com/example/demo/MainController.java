@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -96,7 +97,31 @@ public class MainController {
 			if (!vdpRelationsModels.containsKey(i.getRelationshipName()))
 				vdpRelationsModels2.add(vdpRelationsModels.get(i.getFirst_name_te()));
 		}
-		return vdpRelationsModels2;
+		
+		List<Vdp> vdps2 = new LinkedList<Vdp>();
+		for(VdpRelationsModel i:vdpRelationsModels2)
+		{
+			vdps2.add(new Vdp(i));
+			for(VdpRelationsModel j:i.getWifeList())
+			{
+				vdps2.add(new Vdp(j));
+			}
+			for(VdpRelationsModel j:i.getSonsList())
+			{
+				vdps2.add(new Vdp(j));
+			}
+			for(VdpRelationsModel j:i.getDaughterList())
+			{
+				vdps2.add(new Vdp(j));
+			}
+
+		}
+		
+		
+		
+		
+		
+		return vdps2;
 	}
 	@Autowired
 	VoterDataPRepo dataPRepo;
@@ -125,7 +150,7 @@ public class MainController {
 		for(List<String> i:data)
 		{
 			System.out.println(i.size());
-			Vdp vdp = new Vdp(i.get(0),i.get(1),i.get(2),i.get(3),i.get(4),i.get(5),i.get(6),i.get(7),i.get(8),i.get(9),i.get(10),i.get(11),i.get(12),i.get(13),i.get(14),i.get(15));
+			Vdp vdp = new Vdp(i.get(0),i.get(1),i.get(2),i.get(3),i.get(4),i.get(5),i.get(6),i.get(7),i.get(8),i.get(9),i.get(10),i.get(11),i.get(12),i.get(13),i.get(14),i.get(15),i.get(16));
 		list.add(vdp);
 		}
 		return list;

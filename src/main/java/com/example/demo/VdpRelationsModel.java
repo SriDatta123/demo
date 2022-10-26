@@ -19,16 +19,40 @@ public class VdpRelationsModel {
 	public String relation_type;
 	public int age;
 	public String relationship_name;
-	public String score;
 	public String relationlastnameen;
 	public String relationshipName;
 	public String relationshipSurname;
 	public String village_or_ward_name;
+	public String relationship_namescore;
+	public String first_namescore;
 	
 	public List<VdpRelationsModel> sonsList;
 	public List<VdpRelationsModel> daughterList;
 	public List<VdpRelationsModel> wifeList;
 	
+	
+	
+	
+	public String getRelationship_namescore() {
+		return relationship_namescore;
+	}
+
+
+	public void setRelationship_namescore(String relationship_namescore) {
+		this.relationship_namescore = relationship_namescore;
+	}
+
+
+	public String getFirst_namescore() {
+		return first_namescore;
+	}
+
+
+	public void setFirst_namescore(String first_namescore) {
+		this.first_namescore = first_namescore;
+	}
+
+
 	public VdpRelationsModel(Vdp i) {
 		// TODO Auto-generated constructor stub
 		super();
@@ -51,17 +75,17 @@ public class VdpRelationsModel {
 		this.sonsList = new ArrayList<VdpRelationsModel>();
 		this.daughterList = new ArrayList<VdpRelationsModel>();
 		this.wifeList = new ArrayList<VdpRelationsModel>();
-		this.score = i.getScore();
-		
+		this.first_namescore = i.getFirst_namescore();
+		this.relationship_namescore = i.getRelationship_namescore();
 
 	}
 	
 
 	public VdpRelationsModel(long id, long vpd_id, String door_no, String caste, String first_name, String last_name,
 			String first_name_te, String last_name_te, String gender, String relation_type, int age,
-			String relationship_name, String score, String relationlastnameen, String relationshipName,
+			String relationship_name,  String relationlastnameen, String relationshipName,
 			String relationshipSurname, String village_or_ward_name, List<VdpRelationsModel> sonsList,
-			List<VdpRelationsModel> daughterList, List<VdpRelationsModel> wifeList) {
+			List<VdpRelationsModel> daughterList, List<VdpRelationsModel> wifeList, String first_namescore, String relationship_namescore) {
 		super();
 		this.id = id;
 		this.vpd_id = vpd_id;
@@ -75,7 +99,6 @@ public class VdpRelationsModel {
 		this.relation_type = relation_type;
 		this.age = age;
 		this.relationship_name = relationship_name;
-		this.score = score;
 		this.relationlastnameen = relationlastnameen;
 		this.relationshipName = relationshipName;
 		this.relationshipSurname = relationshipSurname;
@@ -83,6 +106,8 @@ public class VdpRelationsModel {
 		this.sonsList = sonsList;
 		this.daughterList = daughterList;
 		this.wifeList = wifeList;
+		this.first_namescore = first_namescore;
+		this.relationship_namescore = relationship_namescore;
 	}
 
 
@@ -188,13 +213,6 @@ public class VdpRelationsModel {
 		this.relationship_name = relationship_name;
 	}
 
-	public String getScore() {
-		return score;
-	}
-
-	public void setScore(String score) {
-		this.score = score;
-	}
 
 	public String getRelationlastnameen() {
 		return relationlastnameen;
