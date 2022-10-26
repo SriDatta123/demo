@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import javax.annotation.Generated;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,6 +44,7 @@ public class voter_data_pedakurapadu {
 	public String qualification;
 	public String ready_to_volunteer;
 	public String relation_type;
+	@Column(name = "relationship_name")
 	public String relationship_name;
 	public String sectionnameen;
 	public String relationlastnameen;
@@ -65,6 +67,7 @@ public class voter_data_pedakurapadu {
 	public String updatedSurname;
 	public String updatedSurnameEn;
 	public byte isSurnameUpdated;
+	@Column(name = "relationshipName")
 	public String relationshipName;
 	public String relationshipSurname;
 	public String familyId;

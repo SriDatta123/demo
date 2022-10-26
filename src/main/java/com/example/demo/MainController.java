@@ -131,4 +131,18 @@ public class MainController {
 		return list;
 		
 	}
+	
+	@GetMapping("/sort")
+	public Object getSortedData(@RequestParam String name)
+	{
+		 dataPRepo.searchBySurnameTest1(name);
+		return dataPRepo.getNameList2();
+	}
+	
+	@GetMapping("/sort2")
+	public Object getSortedData2(@RequestParam String name,@RequestParam String houseName)
+	{
+		 dataPRepo.searchBySurname(name,houseName);
+		return dataPRepo.getNameList2();
+	}
 }

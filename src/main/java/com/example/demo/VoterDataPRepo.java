@@ -2,10 +2,9 @@ package com.example.demo;
 
 import java.util.List;
 
-import javax.persistence.Tuple;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 
 public interface VoterDataPRepo extends JpaRepository<voter_data_pedakurapadu, Integer>{
 
@@ -20,4 +19,17 @@ public interface VoterDataPRepo extends JpaRepository<voter_data_pedakurapadu, I
 			+ "FROM voter_data_pedakurapadu\r\n"
 			+ "WHERE  door_no = ?1  AND caste = ?2\r\n",nativeQuery = true)
 	List<List<String>> getData1(String door_no, String caste);
+	
+	@Procedure("searchBySurnameTest")
+	void searchBySurnameTest1(String model);
+	
+	@Query(value=
+	"SELECT  col1 FROM namesList ORDER BY priority ASC", nativeQuery = true)
+	String [] getNameList2();
+
+	
+	@Procedure("searchBySurname")
+	void searchBySurname(String name, String houseName);
+	
+	
 }
