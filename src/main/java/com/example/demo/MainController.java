@@ -211,13 +211,7 @@ public class MainController {
 				addFamilyToList(j,vdps2);
 			}
 		}
-		for (VdpRelationsModel j : model.getSonsList()) {
-			vdps2.add(new Vdp(j));
-			if(j.daughterList.size()>0||j.sonsList.size()>0||j.wifeList.size()>0)
-			{
-				addFamilyToList(j,vdps2);
-			}
-		}
+
 		for (VdpRelationsModel j : model.getDaughterList()) {
 			vdps2.add(new Vdp(j));
 			if(j.daughterList.size()>0||j.sonsList.size()>0||j.wifeList.size()>0)
@@ -225,7 +219,13 @@ public class MainController {
 				addFamilyToList(j,vdps2);
 			}
 		}
-		
+		for (VdpRelationsModel j : model.getSonsList()) {
+			vdps2.add(new Vdp(j));
+			if(j.daughterList.size()>0||j.sonsList.size()>0||j.wifeList.size()>0)
+			{
+				addFamilyToList(j,vdps2);
+			}
+		}
 		
 	}
 	
