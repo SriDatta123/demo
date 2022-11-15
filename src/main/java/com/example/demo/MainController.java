@@ -191,49 +191,43 @@ public class MainController {
 		List<Vdp> vdps2 = new LinkedList<Vdp>();
 		List<Vdp> vdps3 = new LinkedList<Vdp>();
 		for (VdpRelationsModel i : vdpRelationsModels2) {
-			
-			if(i.daughterList.size()>0||i.sonsList.size()>0||i.wifeList.size()>0) {
-			vdps2.add(new Vdp(i));
-			
-			addFamilyToList(i,vdps2);
-			
-			}
-			else
+
+			if (i.daughterList.size() > 0 || i.sonsList.size() > 0 || i.wifeList.size() > 0) {
+				vdps2.add(new Vdp(i));
+
+				addFamilyToList(i, vdps2);
+
+			} else
 				vdps3.add(new Vdp(i));
-			
 
 		}
 		vdps2.addAll(vdps3);
 		return vdps2;
 	}
 
-	public void addFamilyToList(VdpRelationsModel model,List<Vdp> vdps2)
-	{
+	public void addFamilyToList(VdpRelationsModel model, List<Vdp> vdps2) {
 		for (VdpRelationsModel j : model.getWifeList()) {
 			vdps2.add(new Vdp(j));
-			if(j.daughterList.size()>0||j.sonsList.size()>0||j.wifeList.size()>0)
-			{
-				addFamilyToList(j,vdps2);
+			if (j.daughterList.size() > 0 || j.sonsList.size() > 0 || j.wifeList.size() > 0) {
+				addFamilyToList(j, vdps2);
 			}
 		}
 
 		for (VdpRelationsModel j : model.getDaughterList()) {
 			vdps2.add(new Vdp(j));
-			if(j.daughterList.size()>0||j.sonsList.size()>0||j.wifeList.size()>0)
-			{
-				addFamilyToList(j,vdps2);
+			if (j.daughterList.size() > 0 || j.sonsList.size() > 0 || j.wifeList.size() > 0) {
+				addFamilyToList(j, vdps2);
 			}
 		}
 		for (VdpRelationsModel j : model.getSonsList()) {
 			vdps2.add(new Vdp(j));
-			if(j.daughterList.size()>0||j.sonsList.size()>0||j.wifeList.size()>0)
-			{
-				addFamilyToList(j,vdps2);
+			if (j.daughterList.size() > 0 || j.sonsList.size() > 0 || j.wifeList.size() > 0) {
+				addFamilyToList(j, vdps2);
 			}
 		}
-		
+
 	}
-	
+
 	@GetMapping("/sort")
 	public Object getSortedData(@RequestParam String name) {
 		dataPRepo.searchBySurnameTest1(name);
@@ -244,5 +238,154 @@ public class MainController {
 	public Object getSortedData2(@RequestParam String name, @RequestParam String houseName) {
 		dataPRepo.searchBySurname(name, houseName);
 		return dataPRepo.getNameList2();
+	}
+
+	@GetMapping("/updateTableWithFamilyId")
+	public Object updateTableWithFamilyId(@RequestParam String familyId) {
+		// Get data in a list using villageOrWardName, constituencyName
+		// Categorise into different surnames
+		// sort different list of family members to data and give family id
+		// update the table with the data
+
+		List<List<String>> data = dataPRepo.getDataForVdpDataToGetData(familyId);
+
+		List<VdpDataToGetData> vdpDataToGetDataList = new LinkedList<VdpDataToGetData>();
+		for (List<String> i : data) {
+//			System.out.println(i.size());
+			VdpDataToGetData vdp = new VdpDataToGetData();
+			vdp.id = Integer.parseInt(i.get(0));
+			vdp.relationship_namescore = i.get(1);
+			vdp.first_namescore = i.get(2);
+			vdp.relation_type = i.get(3);
+			vdp.surname = i.get(4);
+			vdp.sonsList = new LinkedList<VdpDataToGetData>();
+			vdp.daughterList = new LinkedList<VdpDataToGetData>();
+			vdp.wifeList = new LinkedList<VdpDataToGetData>();
+			vdpDataToGetDataList.add(vdp);
+		}
+
+		Map<String, LinkedList<VdpDataToGetData>> map = new HashMap<String, LinkedList<VdpDataToGetData>>();
+
+		for (VdpDataToGetData i : vdpDataToGetDataList) {
+			if (map.get(i.surname) == null)
+				map.put(i.surname, new LinkedList<VdpDataToGetData>());
+
+			map.get(i.surname).add(i);
+		}
+		List<VdpDataToGetData> finalListData = new LinkedList<VdpDataToGetData>();
+		int familyOrder = 1;
+		int memberOrder = 1;
+		for (String surname : map.keySet()) {
+//			System.out.println(surname);
+
+			List<VdpDataToGetData> list = map.get(surname);
+
+			Map<String, VdpDataToGetData> vdpRelationsModels = new HashMap<String, VdpDataToGetData>();
+			for (VdpDataToGetData i : list) {
+				vdpRelationsModels.put(i.first_namescore, i);
+
+			}
+			for (VdpDataToGetData i : list) {
+				String firstNamescore = i.first_namescore;
+
+				if (vdpRelationsModels.containsKey(i.relationship_namescore)) {
+					switch (i.relation_type) {
+					case "S/o":
+
+					{
+							vdpRelationsModels.get(i.relationship_namescore).sonsList
+									.add(vdpRelationsModels.get(firstNamescore));
+					}
+						break;
+					case "D/o": {
+							vdpRelationsModels.get(i.relationship_namescore).daughterList
+									.add(vdpRelationsModels.get(firstNamescore));
+					}
+						break;
+					case "W/o": {
+							vdpRelationsModels.get(i.relationship_namescore).wifeList
+									.add(vdpRelationsModels.get(firstNamescore));
+					}
+						break;
+					}
+
+				}
+
+			}
+			List<VdpDataToGetData> vdpRelationsModels2 = new ArrayList<VdpDataToGetData>();
+			for (VdpDataToGetData i : list) {
+				if (!vdpRelationsModels.containsKey(i.relationship_namescore))
+					vdpRelationsModels2.add(vdpRelationsModels.get(i.first_namescore));
+			}
+
+			List<VdpDataToGetData> vdps2 = new LinkedList<VdpDataToGetData>();
+			List<VdpDataToGetData> vdps3 = new LinkedList<VdpDataToGetData>();
+			for (VdpDataToGetData i : vdpRelationsModels2) {
+
+				if (i.daughterList.size() > 0 || i.sonsList.size() > 0 || i.wifeList.size() > 0) {
+					vdps2.add(i);
+
+					addFamilyToList(i, vdps2);
+
+				} else
+					vdps3.add(i);
+
+			}
+			vdps2.addAll(vdps3);
+			finalListData.addAll(vdps2);
+
+		}
+		String s = finalListData.get(0).surname;
+		for(VdpDataToGetData i:finalListData)
+		{
+			if(!s.equalsIgnoreCase(i.surname))
+			{
+				familyOrder++;
+				memberOrder=1;
+				
+			}
+			i.familyId = String.format("%04d", familyOrder)+String.format("%02d", memberOrder);
+			memberOrder++;
+		}
+		
+		for(VdpDataToGetData i:finalListData)
+		{try {
+			dataPRepo.updatevdp(i.id,i.familyId);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		}
+		return finalListData;
+
+	}
+
+	public void addFamilyToList(VdpDataToGetData model, List<VdpDataToGetData> vdps2) {
+
+		for (VdpDataToGetData j : model.wifeList) {
+			vdps2.add(j);
+			if (j.daughterList.size() > 0 || j.sonsList.size() > 0 || j.wifeList.size() > 0) {
+				addFamilyToList(j, vdps2);
+			}
+		}
+
+		for (VdpDataToGetData j : model.daughterList) {
+			vdps2.add(j);
+			if (j.daughterList.size() > 0 || j.sonsList.size() > 0 || j.wifeList.size() > 0) {
+				addFamilyToList(j, vdps2);
+			}
+		}
+		for (VdpDataToGetData j : model.sonsList) {
+			vdps2.add(j);
+			if (j.daughterList.size() > 0 || j.sonsList.size() > 0 || j.wifeList.size() > 0) {
+				{
+
+					addFamilyToList(j, vdps2);
+				}
+
+			}
+		}
+
 	}
 }

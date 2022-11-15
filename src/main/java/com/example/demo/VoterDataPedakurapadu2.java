@@ -6,12 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-//@Entity
-public class voter_data_pedakurapadu {
+@Entity(name = "voter_data_pedakurapadu")
+public class VoterDataPedakurapadu2 {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long id;
 	public int SNO;
 	public java.sql.Date created_at;
@@ -35,7 +36,6 @@ public class voter_data_pedakurapadu {
 	public String issue_notes;
 	public String issue_type;
 	public String last_name;
-	public String score;
 	public String mobile_number;
 	public String party_affliation;
 	public String partyAffiliationStrength;
@@ -45,19 +45,20 @@ public class voter_data_pedakurapadu {
 	public String qualification;
 	public String ready_to_volunteer;
 	public String relation_type;
-	@Column(name = "relationship_name")
 	public String relationship_name;
 	public String sectionnameen;
 	public String relationlastnameen;
 	public String polingstationaddressen;
 	public String road_name;
 	public String sub_caste;
-	public String village_or_ward_name;
+	@Column(name = "village_or_ward_name" )
+	public String villageOrWardName;
 	public String voter_id;
 	public String bla_id;
 	public String ri_id;
 	public int age;
-	public String constituency_name;
+	@Column(name = "constituency_name" )
+	public String constituencyName;
 	public String constituency_type;
 	public byte isverified;
 	public String feedback;
@@ -68,19 +69,30 @@ public class voter_data_pedakurapadu {
 	public String updatedSurname;
 	public String updatedSurnameEn;
 	public byte isSurnameUpdated;
-	@Column(name = "relationshipName")
 	public String relationshipName;
 	public String relationshipSurname;
 	public String familyId;
+	public String familysorting;
 	public byte isFamilyHead;
 	public String relationShipType;
 	public byte isLeader;
 	public String type;
+	public String details;
+	public String sub_caste_final;
+	public String mandal;
+	public String backup;
+	public String parentid;
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public int getSNO() {
+		return SNO;
+	}
+	public void setSNO(int sNO) {
+		SNO = sNO;
 	}
 	public java.sql.Date getCreated_at() {
 		return created_at;
@@ -208,12 +220,6 @@ public class voter_data_pedakurapadu {
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
-	public String getScore() {
-		return score;
-	}
-	public void setScore(String score) {
-		this.score = score;
-	}
 	public String getMobile_number() {
 		return mobile_number;
 	}
@@ -304,11 +310,11 @@ public class voter_data_pedakurapadu {
 	public void setSub_caste(String sub_caste) {
 		this.sub_caste = sub_caste;
 	}
-	public String getVillage_or_ward_name() {
-		return village_or_ward_name;
+	public String getVillageOrWardName() {
+		return villageOrWardName;
 	}
-	public void setVillage_or_ward_name(String village_or_ward_name) {
-		this.village_or_ward_name = village_or_ward_name;
+	public void setVillageOrWardName(String villageOrWardName) {
+		this.villageOrWardName = villageOrWardName;
 	}
 	public String getVoter_id() {
 		return voter_id;
@@ -334,11 +340,11 @@ public class voter_data_pedakurapadu {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public String getConstituency_name() {
-		return constituency_name;
+	public String getConstituencyName() {
+		return constituencyName;
 	}
-	public void setConstituency_name(String constituency_name) {
-		this.constituency_name = constituency_name;
+	public void setConstituencyName(String constituencyName) {
+		this.constituencyName = constituencyName;
 	}
 	public String getConstituency_type() {
 		return constituency_type;
@@ -418,6 +424,12 @@ public class voter_data_pedakurapadu {
 	public void setFamilyId(String familyId) {
 		this.familyId = familyId;
 	}
+	public String getFamilysorting() {
+		return familysorting;
+	}
+	public void setFamilysorting(String familysorting) {
+		this.familysorting = familysorting;
+	}
 	public byte getIsFamilyHead() {
 		return isFamilyHead;
 	}
@@ -441,6 +453,36 @@ public class voter_data_pedakurapadu {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getDetails() {
+		return details;
+	}
+	public void setDetails(String details) {
+		this.details = details;
+	}
+	public String getSub_caste_final() {
+		return sub_caste_final;
+	}
+	public void setSub_caste_final(String sub_caste_final) {
+		this.sub_caste_final = sub_caste_final;
+	}
+	public String getMandal() {
+		return mandal;
+	}
+	public void setMandal(String mandal) {
+		this.mandal = mandal;
+	}
+	public String getBackup() {
+		return backup;
+	}
+	public void setBackup(String backup) {
+		this.backup = backup;
+	}
+	public String getParentid() {
+		return parentid;
+	}
+	public void setParentid(String parentid) {
+		this.parentid = parentid;
 	}
 	
 	
