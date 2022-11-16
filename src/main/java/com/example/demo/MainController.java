@@ -246,6 +246,7 @@ public class MainController {
 		// Categorise into different surnames
 		// sort different list of family members to data and give family id
 		// update the table with the data
+		List<VdpDataToGetData> finalListData = new LinkedList<VdpDataToGetData>();
 
 		List<List<String>> data = dataPRepo.getDataForVdpDataToGetData(familyId);
 
@@ -265,20 +266,20 @@ public class MainController {
 		}
 
 		Map<String, LinkedList<VdpDataToGetData>> map = new HashMap<String, LinkedList<VdpDataToGetData>>();
-
 		for (VdpDataToGetData i : vdpDataToGetDataList) {
 			if (map.get(i.surname) == null)
 				map.put(i.surname, new LinkedList<VdpDataToGetData>());
 
 			map.get(i.surname).add(i);
 		}
-		List<VdpDataToGetData> finalListData = new LinkedList<VdpDataToGetData>();
+		
 		int familyOrder = 1;
 		int memberOrder = 1;
 		for (String surname : map.keySet()) {
-//			System.out.println(surname);
 
-			List<VdpDataToGetData> list = map.get(surname);
+			List<VdpDataToGetData> list = new LinkedList<VdpDataToGetData>();
+
+			list.addAll(map.get(surname));
 
 			Map<String, VdpDataToGetData> vdpRelationsModels = new HashMap<String, VdpDataToGetData>();
 			for (VdpDataToGetData i : list) {
@@ -293,18 +294,18 @@ public class MainController {
 					case "S/o":
 
 					{
-							vdpRelationsModels.get(i.relationship_namescore).sonsList
-									.add(vdpRelationsModels.get(firstNamescore));
+						vdpRelationsModels.get(i.relationship_namescore).sonsList
+								.add(vdpRelationsModels.get(firstNamescore));
 					}
 						break;
 					case "D/o": {
-							vdpRelationsModels.get(i.relationship_namescore).daughterList
-									.add(vdpRelationsModels.get(firstNamescore));
+						vdpRelationsModels.get(i.relationship_namescore).daughterList
+								.add(vdpRelationsModels.get(firstNamescore));
 					}
 						break;
 					case "W/o": {
-							vdpRelationsModels.get(i.relationship_namescore).wifeList
-									.add(vdpRelationsModels.get(firstNamescore));
+						vdpRelationsModels.get(i.relationship_namescore).wifeList
+								.add(vdpRelationsModels.get(firstNamescore));
 					}
 						break;
 					}
@@ -312,12 +313,18 @@ public class MainController {
 				}
 
 			}
-			List<VdpDataToGetData> vdpRelationsModels2 = new ArrayList<VdpDataToGetData>();
+			List<VdpDataToGetData> vdpRelationsModels2 = new LinkedList<VdpDataToGetData>();
 			for (VdpDataToGetData i : list) {
 				if (!vdpRelationsModels.containsKey(i.relationship_namescore))
 					vdpRelationsModels2.add(vdpRelationsModels.get(i.first_namescore));
+				
+				
 			}
+			for (VdpDataToGetData i : list) {
+				if (vdpRelationsModels.containsKey(i.relationship_namescore))
+					vdpRelationsModels2.add(vdpRelationsModels.get(i.first_namescore));
 
+			}
 			List<VdpDataToGetData> vdps2 = new LinkedList<VdpDataToGetData>();
 			List<VdpDataToGetData> vdps3 = new LinkedList<VdpDataToGetData>();
 			for (VdpDataToGetData i : vdpRelationsModels2) {
@@ -333,29 +340,26 @@ public class MainController {
 			}
 			vdps2.addAll(vdps3);
 			finalListData.addAll(vdps2);
-
+System.out.println(finalListData);
 		}
 		String s = finalListData.get(0).surname;
-		for(VdpDataToGetData i:finalListData)
-		{
-			if(!s.equalsIgnoreCase(i.surname))
-			{
+		for (VdpDataToGetData i : finalListData) {
+			if (!s.equalsIgnoreCase(i.surname)) {
 				familyOrder++;
-				memberOrder=1;
-				
+				memberOrder = 1;
+
 			}
-			i.familyId = String.format("%04d", familyOrder)+String.format("%02d", memberOrder);
+			i.familyId = String.format("%04d", familyOrder) + String.format("%02d", memberOrder);
 			memberOrder++;
 		}
-		
-		for(VdpDataToGetData i:finalListData)
-		{try {
+
+		for (VdpDataToGetData i : finalListData) {
+			try {
 			dataPRepo.updatevdp(i.id,i.familyId);
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
 		return finalListData;
 
