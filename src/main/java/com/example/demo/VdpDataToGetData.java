@@ -2,6 +2,8 @@ package com.example.demo;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class VdpDataToGetData {
 
 	
@@ -13,8 +15,11 @@ public class VdpDataToGetData {
 	public String surname;
 	public String familyId;
 	
+	@JsonIgnore
 	public List<VdpDataToGetData> sonsList;
+	@JsonIgnore
 	public List<VdpDataToGetData> daughterList;
+	@JsonIgnore
 	public List<VdpDataToGetData> wifeList;
 	
 }
